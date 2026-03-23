@@ -18,7 +18,6 @@
       "preco": 100,
       "descricao": "Armário A2 - Corredor 1"
     },
-
     {
       "id": 3,
       "corredor": 1,
@@ -28,7 +27,6 @@
       "preco": null,
       "descricao": "Armário A3 - Corredor 1"
     },
-
     {
       "id": 4,
       "corredor": 1,

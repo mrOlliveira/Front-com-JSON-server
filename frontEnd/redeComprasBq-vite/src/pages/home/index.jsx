@@ -1,58 +1,38 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { lojaService } from "../../services/lojaService";
+import React, { useEffect, useState } from 'react';
+import { lojaService } from '../../services/lojaServices';
 
 export default function Home() {
+
   const [armarios, setArmarios] = useState([]);
-  const navigate = useNavigate();
+  const [erro, setErro] = useState(null);
 
-  // Função simples para buscar os dados
   useEffect(() => {
-    lojaService.listarArmariosDisponiveis()
-      .then((res) => setArmarios(res))
-      .catch((err) => console.log("Erro ao buscar armários:", err));
-  }, []);
+    const carregarDados = async () => {
+      try {
+        const dados = await lojaService.buscarTodos();
+        setArmarios(dados);
+      } catch (err) {
+        setErro("Não foi possível carregar os armários.");
+      }
+    };
+  });
 
-  return (
-    <div className="bg-slate-900 min-h-screen p-6 text-white">
-      <h1 className="text-2xl font-bold text-center mb-6">
-        Mapa de Armários - Bento Quirino
-      </h1>
-
-      {/* Grid simples que funciona em qualquer tela */}
-      <div className="grid grid-cols-4 md:grid-cols-8 gap-3">
-        {armarios.map((item) => (
-          <button
-            key={item.id}
-            onClick={() => navigate(`/detalhes/${item.id}`)}
-            // Cor verde se estiver livre, vermelho se estiver ocupado
-            className={`p-4 rounded shadow-lg text-center font-bold transition-all
-              ${item.esta_ocupado ? "bg-red-600 opacity-50" : "bg-green-600 hover:bg-green-500"}`}
-            disabled={item.esta_ocupado}
-          >
-            <p className="text-xs">Bloco {item.bloco}</p>
-            <p className="text-lg">{item.numero_armario}</p>
-          </button>
-        ))}
-      </div>
-
-      {/* Legenda básica no rodapé */}
-      <div className="mt-8 flex justify-center gap-4 text-sm">
-        <div className="flex items-center gap-1">
-          <div className="w-3 h-3 bg-green-600 rounded"></div> <span>Livre</span>
+return(
+  <div style={{ padding: '40px', backgroundColor: '#0a0e17', minHeight: '100vh' }}>
+            <h1 style={{ color: '#00d2ff', marginBottom: '20px' }}>Armários Disponíveis</h1>
+            
+            <div style={{ 
+                display: 'grid', 
+                gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))', 
+                gap: '20px' 
+            }}>
+                {itens.map((item) => (
+                    <CardProduto 
+                        key={item.id} 
+                        produto={item}  
+                    />
+                ))}
+            </div>
         </div>
-        <div className="flex items-center gap-1">
-          <div className="w-3 h-3 bg-red-600 rounded"></div> <span>Ocupado</span>
-        </div>
-      </div>
-    </div>
-  );
-}
-useEffect(() => {
-  lojaService.listarArmariosDisponiveis()
-    .then((res) => {
-      console.log("Dados que vieram do banco:", res); // <-- Adicione isso
-      setArmarios(res);
-    })
-    .catch((err) => console.log("Erro real:", err));
-}, []);
+    );
+  };
