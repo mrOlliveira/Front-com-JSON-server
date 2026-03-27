@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { lojaService } from '../../services/lojaServices';
+import CardProduto from '../../components/CardProduto';
+import { Link } from 'react-router-dom';
 
 export default function Home() {
 
@@ -15,7 +17,8 @@ export default function Home() {
         setErro("Não foi possível carregar os armários.");
       }
     };
-  });
+    carregarDados();
+  }, []);
 
 return(
   <div style={{ padding: '40px', backgroundColor: '#0a0e17', minHeight: '100vh' }}>
@@ -26,11 +29,15 @@ return(
                 gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))', 
                 gap: '20px' 
             }}>
-                {itens.map((item) => (
-                    <CardProduto 
+                {armarios.length === 0 ? (
+                  erro ? <p style={{color: '#ff4444'}}>{erro}</p> : <p>Carregando...</p>
+                ) : armarios.map((item) => (
+                    <Link to={`/details/${item.id}`} style={{ textDecoration: 'none' }}>
+                      <CardProduto 
                         key={item.id} 
-                        produto={item}  
-                    />
+                        produto={item} 
+                      />
+                    </Link>
                 ))}
             </div>
         </div>

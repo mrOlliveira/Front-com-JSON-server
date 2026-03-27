@@ -1,13 +1,13 @@
 import './CardProduto.css'; 
 
-export default function CardProduto({ produto, aoComprar }) {
+export default function CardProduto({ produto }) {
   const nomeExibicao = produto.nome || `Armário ${produto.posicao}`;
   const categoriaExibicao = produto.categoria || "Estudantil";
 
   return (
     <div className="card-produto">
       <div className="imagem-container">
-        <img />
+<img src="https://via.placeholder.com/250x150/0a0e17/00d2ff?text=Armário" alt="Armário" />
       </div>
       
       <div className="info">
@@ -17,7 +17,7 @@ export default function CardProduto({ produto, aoComprar }) {
         
         <button 
           className="btn-comprar" 
-          onClick={() => aoComprar(produto)}
+        onClick={() => {}}
         >
           VER DETALHES
         </button>
