@@ -1,13 +1,9 @@
-//# Configuração do react-router-dom
 import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-
-// Importando as páginas conforme sua estrutura de pastas
 import Home from './pages/home/index';
 import DetailsScreen from './pages/detailsScreen/index';
 
-// DICA: Como você tem Admin e Aluno, vamos criar um componente simples 
-// para simular a proteção de rotas futuramente.
+
 const Login = () => <div style={{color: 'white', padding: '50px'}}>Página de Login (Em breve)</div>;
 
 export default function AppRoutes() {
