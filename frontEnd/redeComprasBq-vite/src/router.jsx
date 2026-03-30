@@ -1,27 +1,38 @@
-import React from 'react';
+import React, { useState } from 'react'; // - Importamos o useState para criar o controle "aberto/fechado"
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import Home from './pages/home/index';
 import DetailsScreen from './pages/detailsScreen/index';
-
+import NavBar from './components/NavBar'; 
+import SideBar from './components/SideBar';
 
 const Login = () => <div style={{color: 'white', padding: '50px'}}>Página de Login (Em breve)</div>;
 
 export default function AppRoutes() {
+    const [isSideBarOpen, setIsSideBarOpen] = useState(true); //
+    const toggleSideBar = () => setIsSideBarOpen(!isSideBarOpen); //
+
     return (
         <BrowserRouter>
-            <Routes>
-                {/* Rota Inicial (Vitrine de Uniformes e Armários) */}
-                <Route path="/" element={<Home />} />
+            <NavBar onMenuClick={toggleSideBar} /> {/* */}
 
-                {/* Rota para ver detalhes de um item específico (ex: /details/123) */}
-                <Route path="/details/:id" element={<DetailsScreen />} />
-
-                {/* Rota de Login */}
-                <Route path="/login" element={<Login />} />
-
-                {/* Se o usuário digitar qualquer coisa errada, volta para a Home */}
-                <Route path="*" element={<Navigate to="/" />} />
-            </Routes>
+            <div style={{ display: 'flex' }}>
+                
+                <SideBar isOpen={isSideBarOpen} /> {/* */}
+                <main style={{
+                    flexGrow: 1, //
+                    marginLeft: isSideBarOpen ? '200px' : '0',
+                    transition: 'margin-left 0.3s ease',
+                    minHeight: 'calc(100vh - 60px)', 
+                    backgroundColor: '#0a0e17' 
+                }}>
+                    <Routes>
+                        <Route path="/" element={<Home />} />
+                        <Route path="/details/:id" element={<DetailsScreen />} />
+                        <Route path="/login" element={<Login />} />
+                        <Route path="*" element={<Navigate to="/" />} />
+                    </Routes>
+                </main>
+            </div>
         </BrowserRouter>
     );
 }

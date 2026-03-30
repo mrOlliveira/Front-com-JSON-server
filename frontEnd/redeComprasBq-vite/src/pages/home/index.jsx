@@ -20,20 +20,21 @@ export default function Home() {
     carregarDados();
   }, []);
 
-return(
-  <div>
-            <h1>Armários Disponíveis</h1>
-            
-            <div >
-                { armarios.map((item) => (
-                  <Link to={`/details/${item.id}`} style={{ textDecoration: 'none' }}>
-                    <CardProduto 
-                      key={item.id} 
-                      produto={item} 
-                      />
-                    </Link>
-                ))}
-            </div>
-        </div>
-    );
-  };
+  return (
+    <div style={{ padding: '20px', minHeight: '100vh' }}>
+      <h1 style={{ textAlign: 'center' }}>Armários Disponíveis</h1>
+      
+      <div style={{ 
+        display: 'grid', 
+        gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', 
+        gap: '15px' 
+      }}>
+        {armarios.map((item) => (
+          <Link key={item.id} to={`/details/${item.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+            <CardProduto produto={item} />
+          </Link>
+        ))}
+      </div>
+    </div>
+  );
+}
